@@ -52,7 +52,7 @@ assetic:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysql
+        driver:   pdo_pgsql
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%database_name%"
@@ -78,3 +78,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+fos_rest:
+    routing_loader:
+        default_format: json
