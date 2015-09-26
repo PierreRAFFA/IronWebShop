@@ -36,11 +36,11 @@ class Article
     private $description;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="rating", type="smallint")
+     * @ORM\Column(name="email", type="text")
      */
-    private $rating;
+    private $email;
 
     /**
      * Bidirectional
@@ -101,6 +101,30 @@ class Article
     }
 
     /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Article
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
      * Get description
      *
      * @return string
@@ -111,32 +135,7 @@ class Article
     }
 
     /**
-     * Set rating
-     *
-     * @param integer $rating
-     *
-     * @return Article
-     */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-
-        return $this;
-    }
-
-    /**
-     * Get rating
-     *
-     * @return integer
-     */
-    public function getRating()
-    {
-        return $this->rating;
-    }
-
-
-    /**
-     * Get rating
+     * Get Comments
      *
      * @return ArrayCollection
      */

@@ -17,7 +17,7 @@ class ShopDataFixture implements FixtureInterface
         $article = new Article();
         $article->setTitle('Title1');
         $article->setDescription('Desc1');
-        $article->setRating(1);
+        $article->setEmail('writer1@shop.com');
         $manager->persist($article);
         $manager->flush();
 
@@ -26,13 +26,15 @@ class ShopDataFixture implements FixtureInterface
         $article = new Article();
         $article->setTitle('Title2');
         $article->setDescription('Desc2');
-        $article->setRating(1);
+        $article->setEmail('writer2@shop.com');
+
         $manager->persist($article);
         $manager->flush();
 
         $comment = new Comment();
         $comment->setEmail('user1@test.com');
         $comment->setContent('user1 Content');
+        $comment->setRating(1);
         $article->addComment($comment);
         $manager->persist($comment);
         $manager->flush();
@@ -43,7 +45,7 @@ class ShopDataFixture implements FixtureInterface
         $article = new Article();
         $article->setTitle('Title3');
         $article->setDescription('Desc3');
-        $article->setRating(5);
+        $article->setEmail('writer3@shop.com');
         $manager->persist($article);
         $manager->flush();
 
@@ -52,6 +54,7 @@ class ShopDataFixture implements FixtureInterface
             $comment = new Comment();
             $comment->setEmail("user$i@test.com");
             $comment->setContent("user$i Content");
+            $comment->setRating(rand(0,5));
             $article->addComment($comment);
             $manager->persist($comment);
             $manager->flush();

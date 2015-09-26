@@ -29,11 +29,11 @@ class EntityControllerTestBase extends WebTestCase
 //        $application->run($input);
 
         //create the tables
-        $input = new ArrayInput(array(
-            'command' => 'doctrine:schema:update',
-            '--force' => true
-        ));
-        $application->run($input);
+//        $input = new ArrayInput(array(
+//            'command' => 'doctrine:schema:update',
+//            '--force' => true
+//        ));
+//        $application->run($input);
 
 
         //clean and apply the fixture

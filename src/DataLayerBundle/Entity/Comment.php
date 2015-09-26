@@ -36,12 +36,20 @@ class Comment
     private $email;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="rating", type="smallint")
+     */
+    private $rating;
+
+    /**
      * Bidirectional
      *
      * @ORM\ManyToOne(targetEntity="Article", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      **/
     private $article;
+
 
 
     /**
@@ -100,6 +108,30 @@ class Comment
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set rating
+     *
+     * @param integer $rating
+     *
+     * @return Comment
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return integer
+     */
+    public function getRating()
+    {
+        return $this->rating;
     }
 
     /**
