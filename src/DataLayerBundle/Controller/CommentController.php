@@ -3,6 +3,7 @@
 namespace DataLayerBundle\Controller;
 
 use DataLayerBundle\Entity\Comment;
+use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,9 +12,24 @@ class CommentController extends EntityController
 {
     ////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////  GET
-    public function getArticleCommentsAction()
+    public function getArticleCommentsAction($slug)
     {
+        //check if the article exists.
+        $article = $this->getDoctrine()
+            ->getRepository('DataLayerBundle:Article')
+            ->find($slug);
 
+        if (!$article) {
+            throw $this->createNotFoundException(
+                'No article found for id '.$slug
+            );
+        }
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($article->getComments());
+
+        return $this->get('fos_rest.view_handler')->handle($view);
     }
 
     ////////////////////////////////////////////////////////////////////////

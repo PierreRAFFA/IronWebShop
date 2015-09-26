@@ -42,6 +42,14 @@ class Article
      */
     private $email;
 
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creation_date", type="datetime")
+     */
+    private $creationDate;
+
     /**
      * Bidirectional
      *
@@ -51,6 +59,10 @@ class Article
      */
     private $comments = [];
 
+
+    public function __construct(){
+        $this->creationDate = new \DateTime();
+    }
 
     /**
      * Get id
@@ -122,6 +134,29 @@ class Article
         $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * Set creationDate
+     *
+     * @param \DateTime $creationDate
+     * @return Classified
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
     }
 
     /**

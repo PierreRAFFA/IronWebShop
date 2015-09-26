@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Comment
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="DataLayerBundle\Entity\CommentRepository")
  */
 class Comment
 {
@@ -43,6 +43,13 @@ class Comment
     private $rating;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creation_date", type="datetime")
+     */
+    private $creationDate;
+
+    /**
      * Bidirectional
      *
      * @ORM\ManyToOne(targetEntity="Article", inversedBy="comments")
@@ -51,6 +58,10 @@ class Comment
     private $article;
 
 
+
+    public function __construct(){
+        $this->creationDate = new \DateTime();
+    }
 
     /**
      * Get id
@@ -132,6 +143,29 @@ class Comment
     public function getRating()
     {
         return $this->rating;
+    }
+
+    /**
+     * Set creationDate
+     *
+     * @param \DateTime $creationDate
+     * @return Classified
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
     }
 
     /**
