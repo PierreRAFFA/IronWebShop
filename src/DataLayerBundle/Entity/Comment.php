@@ -3,6 +3,7 @@
 namespace DataLayerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Comment
@@ -37,6 +38,13 @@ class Comment
 
     /**
      * @var integer
+     *
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 5,
+     *      minMessage = "You can not select a rating lower than {{limit}}",
+     *      maxMessage = "You can not select a rating higher than {{limit}}"
+     * )
      *
      * @ORM\Column(name="rating", type="smallint")
      */
