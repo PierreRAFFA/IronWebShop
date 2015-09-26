@@ -42,6 +42,15 @@ class Article
      */
     private $rating;
 
+    /**
+     * Bidirectional
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection $comments
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="article")
+     */
+    private $comments = [];
+
 
     /**
      * Get id
@@ -123,6 +132,23 @@ class Article
     public function getRating()
     {
         return $this->rating;
+    }
+
+
+    /**
+     * Get rating
+     *
+     * @return ArrayCollection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment)
+    {
+        $comment->setArticle($this);
+        $this->comments[] = $comment;
     }
 }
 

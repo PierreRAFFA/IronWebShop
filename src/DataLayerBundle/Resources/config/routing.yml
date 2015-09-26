@@ -2,3 +2,8 @@ articles:
     type: rest
     prefix: /api/v1
     resource: DataLayerBundle:Article
+
+comments:
+    type: rest
+    prefix: /api/v1
+    resource: DataLayerBundle:Comment

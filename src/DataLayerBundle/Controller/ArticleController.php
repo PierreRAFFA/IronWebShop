@@ -4,25 +4,42 @@ namespace DataLayerBundle\Controller;
 
 use DataLayerBundle\Entity\Article;
 use FOS\RestBundle\View\View;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ArticleController extends Controller
+class ArticleController extends EntityController
 {
     ////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////  GET
+    /**
+     * Returns an article with all comments
+     *
+     * @param $slug
+     * @return mixed
+     */
     public function getArticleAction($slug)
     {
+        $article = $this->getDoctrine()
+            ->getRepository('DataLayerBundle:Article')
+            ->find($slug);
 
+        if (!$article) {
+            throw $this->createNotFoundException(
+                'No article found for id '.$slug
+            );
+        }
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($article);
+
+        return $this->get('fos_rest.view_handler')->handle($view);
     }
     public function getArticlesAction()
     {
         $articles = $this->getDoctrine()
             ->getRepository('DataLayerBundle:Article')
             ->findAll();
-
-        $this->get('logger')->info(var_export($articles,true));
 
         $view = View::create()
             ->setStatusCode(200)
@@ -48,29 +65,4 @@ class ArticleController extends Controller
 
         return new Response(sprintf('{"result":%s}' , $article->getId()));
     }
-
-    ////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////// UTILS
-    /**
-     * Populates the entity from the parameters
-     * This method ignores parameters which does not match the entity.
-     *
-     * @param $entity
-     * @param $parameters array of parameters
-     */
-    private function _updateEntity($entity, $parameters)
-    {
-        foreach($parameters as $parameterName=>$parameterValue)
-        {
-            $methodName = sprintf("set%s", ucfirst($parameterName) );
-            $this->get("logger")->info($methodName);
-
-            if ( method_exists($entity,$methodName))
-            {
-                $entity->$methodName($parameterValue);
-            }
-        }
-    }
-
-
 }
