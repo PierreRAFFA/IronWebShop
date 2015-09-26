@@ -65,4 +65,33 @@ class ArticleController extends EntityController
 
         return new Response(sprintf('{"result":%s}' , $article->getId()));
     }
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////  PUT
+    public function putArticleAction($slug, Request $request)
+    {
+        $parameters = $request->query->all();
+
+        $article = $this->getDoctrine()
+            ->getRepository('DataLayerBundle:Article')
+            ->find($slug);
+
+        if (!$article) {
+            throw $this->createNotFoundException(
+                'No product found for id '.$slug
+            );
+        }
+
+        $this->_updateEntity($article, $parameters);
+
+        //save
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($article);
+        $em->flush();
+
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($article);
+
+        return $this->get('fos_rest.view_handler')->handle($view);
+    }
 }
